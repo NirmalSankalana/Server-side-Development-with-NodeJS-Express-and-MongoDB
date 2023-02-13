@@ -14,9 +14,7 @@ const port = 3001;
 // Connect Mongodb Database
 // mongoose.set("strictQuery", false);
 mongoose
-  .connect(
-    "mongodb+srv://nirmal:Ce_qaaLq4CNKRth@cluster0.9buai.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("Connected to MongoDB Atlas");
   })
