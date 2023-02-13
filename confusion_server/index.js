@@ -9,14 +9,36 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 
+const Dishes = require("./models/dishModel");
+
 const hostname = "localhost";
-const port = 3001;
+const port = 5000;
 // Connect Mongodb Database
-// mongoose.set("strictQuery", false);
+mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("Connected to MongoDB Atlas");
+    var newDish = Dishes({
+      name: "Biriyani",
+      description: "Lorem Epsum",
+    });
+    newDish
+      .save()
+      .then((dish) => {
+        console.log(dish);
+        return Dishes.find({}).exec({});
+      })
+      .then((dishes) => {
+        console.log(dishes);
+        return Dishes.remove({});
+      })
+      .then(() => {
+        return mongoose.connection.close();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   })
   .catch((err) => {
     console.log(err.message);
